@@ -9,20 +9,21 @@ public class Board {
             {'#', '#', '#', '#', '#'}
     };
 
-    ArrayList<Character> guessed = new ArrayList<>();
 
+    ArrayList<Character> guessedNumbers = new ArrayList<>();
+
+    //print board
     public void print() {
         for (int i = 0; i < this.board.length; i++) {
             System.out.println();
             for (int j = 0; j < this.board[i].length; j++) {
                 System.out.print(this.board[i][j]);
-
             }
-
         }
         System.out.println();
     }
 
+    // make move for player and computer
     public void move(char sign, char move) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
@@ -33,17 +34,20 @@ public class Board {
         }
     }
 
+    //check if move is taken
     public boolean checkIfTaken(char move) {
-        if (guessed.contains(move)) {
+        if (guessedNumbers.contains(move)) {
             alredyTaken();
         }
         return true;
     }
 
+    //print message if move is taken
     public void alredyTaken() {
         System.out.println("Den rutan är redan tagen!");
     }
 
+    //check if player or computer won
     public boolean checkIfWon(char sign) {
         for (int i = 0; i < board.length; i++) {
             for (int j = i + 1; j < board.length; j++) {

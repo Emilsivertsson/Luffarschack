@@ -13,6 +13,7 @@ public class Computer{
         return sign;
     }
 
+    //get random char from numbers array
     public char getComputerMove(){
         Random random = new Random();
         return numbers[random.nextInt(numbers.length)];

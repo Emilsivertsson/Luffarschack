@@ -5,7 +5,6 @@ public class Logic {
 
     Scanner scanner = new Scanner(System.in);
 
-
     Board board = new Board();
     Menu menu = new Menu();
 
@@ -16,7 +15,6 @@ public class Logic {
 
     public void startGame() {
 
-
         while (true) {
             menu.menu();
 
@@ -24,30 +22,36 @@ public class Logic {
 
             choice = scanner.nextInt();
 
+            // single player game starts here
             switch (choice) {
                 case 1 -> {
                     menu.onePlayer();
                     scanner.nextLine();
                     player1.setName(scanner.nextLine());
+
                     while(true){
                         board.print();
+                        //player one move
                         menu.makeYourMove(player1);
                         moveSwitch(player1);
+                        //check if player won
                         if (board.checkIfWon(player1.getSign())){
                             menu.winner(player1.getName());
                             playAgain();
                         }
 
                         board.print();
-
+                        //computer move
                         char computerRound = computer.getComputerMove();
-                        if (!board.guessed.contains(computerRound)) {
+                        if (!board.guessedNumbers.contains(computerRound)) {
                             board.move(computer.getSign(), computerRound);
                             menu.computerMove();
                         } else {
+                            //if computer move is taken, get new move
                             computerRound = computer.getComputerMove();
                             board.move(computer.getSign(), computerRound);
                         }
+                        //check if computer won
                         if (board.checkIfWon(computer.getSign())){
                             menu.lose();
                             playAgain();
@@ -56,6 +60,7 @@ public class Logic {
                     }
                 }
                 case 2 -> {
+                    //two player game starts here
                     boolean twoPlayers = true;
                     menu.onePlayer(twoPlayers);
                     scanner.nextLine();
@@ -66,15 +71,19 @@ public class Logic {
 
                     while(true) {
                         board.print();
+                        //player one move
                         menu.makeYourMove(player1);
                         moveSwitch(player1);
+                        //check if player one won
                         if (board.checkIfWon(player1.getSign())) {
                             menu.winner(player1.getName());
                             playAgain();
                         }
                         board.print();
+                        //player two move
                         menu.makeYourMove(player2);
                         moveSwitch(player2);
+                        //check if player two won
                         if (board.checkIfWon(player2.getSign())) {
                             menu.winner(player2.getName());
                             playAgain();
@@ -101,7 +110,7 @@ public class Logic {
             case '1', '2', '3', '4', '5', '6', '7', '8', '9' -> {
                 if (board.checkIfTaken(move)) {
                     board.move(player.getSign(), move);
-                    board.guessed.add(move);
+                    board.guessedNumbers.add(move);
                 }
                 else {
                     board.alredyTaken();
@@ -121,7 +130,7 @@ public class Logic {
             choice = choice.toLowerCase();
             switch (choice){
                 case "j" -> {
-                    board.guessed.clear();
+                    board.guessedNumbers.clear();
                     board.board = new char[][]{{'#', '#', '#', '#', '#'},
                             {'#', '1', '2', '3', '#'},
                             {'#', '4', '5', '6', '#'},
